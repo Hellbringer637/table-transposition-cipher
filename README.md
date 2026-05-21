@@ -4,7 +4,7 @@
 
 ## Как запустить
 
-1. Открыть TranspositionCipher.sln в Visual Studio 2022
+1. Открыть table-transposition-cipher.sln в Visual Studio 2022
 2. Нажать F5 для компиляции и запуска
 
 ## Использование
