@@ -9,40 +9,40 @@
 using namespace std;
 
 void Menu() {
-    cout << "1. Шифрование" << endl;
-    cout << "2. Расшифрование" << endl << endl;
-    cout << "Выберите опцию (1-2): ";
+    cout << "1. РЁРёС„СЂРѕРІР°РЅРёРµ" << endl;
+    cout << "2. Р Р°СЃС€РёС„СЂРѕРІР°РЅРёРµ" << endl << endl;
+    cout << "Р’С‹Р±РµСЂРёС‚Рµ РѕРїС†РёСЋ (1-2): ";
 }
 
-//Проверка ключа
+//РџСЂРѕРІРµСЂРєР° РєР»СЋС‡Р°
 bool isValidKey(const string& key) {
     if (key.empty() || key.length() > 9) {
-        cout << "Ключ должен содержать от 1 до 9 неповторяющихся цифр (без 0)!" << endl;
+        cout << "РљР»СЋС‡ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РѕС‚ 1 РґРѕ 9 РЅРµРїРѕРІС‚РѕСЂСЏСЋС‰РёС…СЃСЏ С†РёС„СЂ (Р±РµР· 0)!" << endl;
         return false;
     }
     for (char c : key) {
         if (!isdigit(c) || c == '0') {
-            cout << "Только цифры от 1 до 9!" << endl;
+            cout << "РўРѕР»СЊРєРѕ С†РёС„СЂС‹ РѕС‚ 1 РґРѕ 9!" << endl;
             return false;
         }
     }
     for (size_t i = 0; i < key.length(); i++)
         for (size_t j = i + 1; j < key.length(); j++)
             if (key[i] == key[j]) {
-                cout << "Цифры не должны повторяться!" << endl;
+                cout << "Р¦РёС„СЂС‹ РЅРµ РґРѕР»Р¶РЅС‹ РїРѕРІС‚РѕСЂСЏС‚СЊСЃСЏ!" << endl;
                 return false;
             }
     return true;
 }
 
-//Сортировка ключа по возрастанию
+//РЎРѕСЂС‚РёСЂРѕРІРєР° РєР»СЋС‡Р° РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
 string sortKey(const string& key) {
     string sorted = key;
     sort(sorted.begin(), sorted.end());
     return sorted;
 }
 
-//Шифрование
+//РЁРёС„СЂРѕРІР°РЅРёРµ
 string encrypt(const string& text, const string& key) {
     string result;
     int cols = key.length();
@@ -56,13 +56,13 @@ string encrypt(const string& text, const string& key) {
     return result;
 }
 
-//Расшифрование
+//Р Р°СЃС€РёС„СЂРѕРІР°РЅРёРµ
 string decrypt(const string& text, const string& key) {
     int cols = key.length();
     int rows = text.length() / cols;
     string sortedKey = sortKey(key);
 
-    //Таблица
+    //РўР°Р±Р»РёС†Р°
     vector<vector<char>> table(rows, vector<char>(cols, ' '));
     int pos = 0;
     for (char sortedDigit : sortedKey) {
@@ -78,22 +78,22 @@ string decrypt(const string& text, const string& key) {
         }
     }
 
-    //Удаление лишних символов
+    //РЈРґР°Р»РµРЅРёРµ Р»РёС€РЅРёС… СЃРёРјРІРѕР»РѕРІ
     result.erase(remove(result.begin(), result.end(), '_'), result.end());
     result.erase(remove(result.begin(), result.end(), '*'), result.end());
     return result;
 }
 
-//Добавление символов до кратности длине ключа
+//Р”РѕР±Р°РІР»РµРЅРёРµ СЃРёРјРІРѕР»РѕРІ РґРѕ РєСЂР°С‚РЅРѕСЃС‚Рё РґР»РёРЅРµ РєР»СЋС‡Р°
 string padText(string text, const string& key) {
     if (text.length() % key.length() != 0)
         text.append(key.length() - text.length() % key.length(), '_');
     return text;
 }
 
-//Вывод таблицы
+//Р’С‹РІРѕРґ С‚Р°Р±Р»РёС†С‹
 void printTable(const string& text, const string& key) {
-    cout << endl << "Таблица:" << endl << endl;
+    cout << endl << "РўР°Р±Р»РёС†Р°:" << endl << endl;
 
     for (char c : key) cout << c << " ";
     cout << endl;
@@ -115,36 +115,36 @@ int main() {
     getline(cin, choice);
 
     if (choice != "1" && choice != "2") {
-        cout << endl << "Надо попасть либо по 1, либо по 2 :(" << endl;
+        cout << endl << "РќР°РґРѕ РїРѕРїР°СЃС‚СЊ Р»РёР±Рѕ РїРѕ 1, Р»РёР±Рѕ РїРѕ 2 :(" << endl;
         return 0;
     }
 
     cout << "------------------------------------------------------------------------------" << endl;
 
     string text, key, block;
-    cout << "Введите текст: ";
+    cout << "Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚: ";
     getline(cin, text);
 
-    cout << "Введите ключ (неповторяющимися цифрами без 0): ";
+    cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ (РЅРµРїРѕРІС‚РѕСЂСЏСЋС‰РёРјРёСЃСЏ С†РёС„СЂР°РјРё Р±РµР· 0): ";
     getline(cin, key);
     if (!isValidKey(key)) return 0;
 
-    cout << "Номера блокированных ячеек (с 1 до " << text.length() << ") через пробелы: ";
+    cout << "РќРѕРјРµСЂР° Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹С… СЏС‡РµРµРє (СЃ 1 РґРѕ " << text.length() << ") С‡РµСЂРµР· РїСЂРѕР±РµР»С‹: ";
     getline(cin, block);
 
-    //Обработка блокированных ячеек
+    //РћР±СЂР°Р±РѕС‚РєР° Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹С… СЏС‡РµРµРє
     vector<int> indexblock;
     istringstream iss(block);
     int index;
     while (iss >> index) {
         if (index < 1 || index > static_cast<int>(text.length())) {
-            cout << "Числа не должны быть вне диапазона!" << endl;
+            cout << "Р§РёСЃР»Р° РЅРµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РІРЅРµ РґРёР°РїР°Р·РѕРЅР°!" << endl;
             return 0;
         }
         indexblock.push_back(index);
     }
 
-    //Вставка * в блокированные ячейки
+    //Р’СЃС‚Р°РІРєР° * РІ Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹Рµ СЏС‡РµР№РєРё
     for (int i = indexblock.size() - 1; i >= 0; i--)
         text.insert(indexblock[i] - 1, "*");
 
@@ -153,11 +153,11 @@ int main() {
         text = padText(text, key);
         printTable(text, key);
         string encrypted = encrypt(text, key);
-        cout << endl << "Зашифрованный текст: " << encrypted << endl;
+        cout << endl << "Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚: " << encrypted << endl;
     }
     else {
         string decrypted = decrypt(text, key);
-        cout << endl << "Расшифрованный текст: " << decrypted << endl;
+        cout << endl << "Р Р°СЃС€РёС„СЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚: " << decrypted << endl;
     }
     return 0;
 }
